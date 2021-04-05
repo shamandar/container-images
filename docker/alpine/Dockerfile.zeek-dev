@@ -1,3 +1,11 @@
 #ARG FROM_IMAGE=alpine:3.13.4
 ARG FROM_IMAGE
 FROM ${FROM_IMAGE}
+
+WORKDIR /workdir
+ARG REQUIREMENTS
+COPY ${REQUIREMENTS} Requirements.dev
+
+RUN apk --update --no-cache add `cat Requirements.dev` && rm -rf /var/cache/apk
+
+RUN pip3 install junit2html
