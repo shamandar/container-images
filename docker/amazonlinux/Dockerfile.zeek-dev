@@ -1,0 +1,23 @@
+# amazonlinux-2 is based on centos-7 (but without extra EPEL repo)
+#
+# docker run amazonlinux:2 yum --version
+#   3.4.3
+#     Installed: rpm-4.11.3-40.amzn2.0.5.x86_64 at 2021-03-26 17:30
+#     Built    : Amazon Linux at 2020-09-28 17:17
+#     Committed: Sai Harsha <ssuryad@amazon.com> at 2020-09-08
+#
+#     Installed: yum-3.4.3-158.amzn2.0.5.noarch at 2021-03-26 17:30
+#     Built    : Amazon Linux at 2021-02-25 18:33
+#     Committed: Robert Nickel <halfdime@amazon.com> at 2021-02-22
+#
+# docker run --net=host amazonlinux:2 /bin/sh -c "yum --assumeyes install epel-release; yum repolist"
+#   ...
+#   No package epel-release available.
+#   Error: Nothing to do
+#   Loaded plugins: ovl, priorities
+#   repo id                        repo name                                  status
+#   amzn2-core/2/x86_64            Amazon Linux 2 core repository             24020
+#   repolist: 24020
+
+ARG FROM_IMAGE
+FROM ${FROM_IMAGE}

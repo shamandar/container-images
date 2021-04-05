@@ -1,0 +1,19 @@
+# oraclelinux-8 is based on centos-8 (but without extra Powertools repo)
+#
+# docker run oraclelinux:8 dnf --version
+#   4.2.23
+#     Installed: dnf-0:4.2.23-4.el8.noarch at Thu Mar  4 17:44:31 2021
+#     Built    :  at Thu Nov  5 16:58:32 2020
+#
+#     Installed: rpm-0:4.14.3-4.el8.x86_64 at Thu Mar  4 17:44:29 2021
+#     Built    :  at Sun Aug  9 03:55:00 2020
+#
+# docker run --net=host oraclelinux:8 /bin/sh -c "dnf --assumeyes install dnf-plugins-core; dnf config-manager --set-enabled powertools; dnf repolist"
+#   ...
+#   Error: No matching repo to modify: powertools.
+#   repo id                     repo name
+#   ol8_appstream               Oracle Linux 8 Application Stream (x86_64)
+#   ol8_baseos_latest           Oracle Linux 8 BaseOS Latest (x86_64)
+
+ARG FROM_IMAGE
+FROM ${FROM_IMAGE}
