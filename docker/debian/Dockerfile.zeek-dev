@@ -1,2 +1,17 @@
 ARG FROM_IMAGE
 FROM ${FROM_IMAGE}
+
+WORKDIR /workdir
+ARG REQUIREMENTS
+COPY ${REQUIREMENTS} Requirements.dev
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG TZ=Etc/UTC
+RUN apt-get update \
+        --quiet=2 --assume-yes --no-install-recommends \
+    && apt-get install \
+        --quiet=2 --assume-yes --no-install-recommends `cat Requirements.dev` \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+
+RUN pip3 install junit2html
