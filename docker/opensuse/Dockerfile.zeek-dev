@@ -1,3 +1,18 @@
 #ARG FROM_IMAGE=opensuse/leap:15.2
 ARG FROM_IMAGE
 FROM ${FROM_IMAGE}
+
+WORKDIR /workdir
+ARG REQUIREMENTS
+COPY ${REQUIREMENTS} Requirements.dev
+
+RUN zypper refresh \
+    && zypper --non-interactive --quiet update \
+        --auto-agree-with-licenses --no-recommends \
+    && zypper --non-interactive --quiet install \
+        --auto-agree-with-licenses --no-recommends `cat Requirements.dev` \
+    && zypper clean \
+    && rm -rf /var/cache/zypp/*
+
+RUN pip3 install --upgrade pip \
+    && pip3 install junit2html
