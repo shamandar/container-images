@@ -7,7 +7,7 @@ FROM ${FROM_IMAGE_DEV} as Builder
 
 
 ##------------------------------------------------------------------------------
-##  Checkout Suricata code
+##  Checkout Zeek code
 ##------------------------------------------------------------------------------
 ARG ZEEK_GIT_REPO=https://github.com/zeek/zeek
 ARG ZEEK_GIT_TAG=master
