@@ -16,3 +16,17 @@
 
 ARG FROM_IMAGE
 FROM ${FROM_IMAGE}
+
+WORKDIR /workdir
+ARG REQUIREMENTS
+COPY ${REQUIREMENTS} Requirements.dev
+
+# Enable `powertools` repo for development packages.
+RUN dnf --assumeyes install dnf-plugins-core \
+    && dnf config-manager --set-enabled powertools
+
+RUN dnf --assumeyes update \
+    && dnf --assumeyes install `cat Requirements.dev` \
+    && dnf clean all
+
+RUN pip3 install junit2html

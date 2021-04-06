@@ -22,3 +22,16 @@
 
 ARG FROM_IMAGE
 FROM ${FROM_IMAGE}
+
+WORKDIR /workdir
+ARG REQUIREMENTS
+COPY ${REQUIREMENTS} Requirements.dev
+
+# Enable EPEL extra repo
+#RUM yum --assumeyes install epel-release
+
+RUN yum --assumeyes update \
+    && yum --assumeyes install `cat Requirements.dev` \
+    && yum clean all
+
+RUN pip3 install junit2html
