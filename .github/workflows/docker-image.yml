@@ -2,6 +2,7 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
+    branches: [ dev/* ]
   push:
     branches: [ main ]
   pull_request:
