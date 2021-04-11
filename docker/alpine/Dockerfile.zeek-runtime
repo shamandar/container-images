@@ -7,5 +7,3 @@ ARG REQUIREMENTS
 COPY ${REQUIREMENTS} Requirements.txt
 
 RUN apk --update --no-cache add `cat Requirements.txt` && rm -rf /var/cache/apk
-
-RUN pip3 install junit2html

@@ -1,1 +1,1 @@
-../../generic/Dockerfile.zeek
+../Dockerfile.zeek

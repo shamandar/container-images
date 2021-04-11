@@ -1,0 +1,32 @@
+ARG FROM_IMAGE_BASE
+FROM ${FROM_IMAGE_BASE}
+
+
+##------------------------------------------------------------------------------
+##  Checkout source code
+##------------------------------------------------------------------------------
+ARG ZEEK_GIT_REPO=https://github.com/zeek/zeek
+ARG ZEEK_GIT_TAG=master
+ARG ZEEK_PREFIX=/opt/zeek
+LABEL zeek_git_repo="${ZEEK_GIT_REPO}"
+LABEL zeek_git_tag="${ZEEK_GIT_TAG}"
+
+WORKDIR /scratch
+RUN git clone \
+        --branch ${ZEEK_GIT_TAG} \
+        --depth 1 \
+        --recursive \
+    ${ZEEK_GIT_REPO}
+
+##------------------------------------------------------------------------------
+##  Build software
+##------------------------------------------------------------------------------
+WORKDIR /scratch/zeek
+RUN ./configure \
+        --prefix=${ZEEK_PREFIX}
+
+#RUN make -j
+RUN make
+
+RUN make install
+ENV PATH="${ZEEK_PREFIX}/bin:$PATH"
