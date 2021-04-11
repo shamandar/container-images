@@ -1,10 +1,10 @@
-name: Docker Image CI
+name: Docker Image zeek-dev
 
 on:
-  workflow_dispatch:
-    branches: [ dev/* ]
   push:
-    branches: [ main ]
+    branches:
+    - main
+    - dev/*
   pull_request:
     branches: [ main ]
 
@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build all Docker images
-      run: make -j all
+      run: make all
