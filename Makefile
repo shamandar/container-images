@@ -16,19 +16,19 @@ else
 endif
 
 # Docker tag version separator `:` is conflicting with Makefile `:`.
-# Temporary use `|` as Docker tag separator in Makefile targets.
+# Temporary use `-` as Docker tag separator in Makefile targets.
 _TARGET_DEFAULT_DOCKER_IMAGES := \
-	alpine|3.13.4 \
-	amazonlinux|2 \
-	centos|7 \
-	centos|8 \
-	debian|10 \
-	fedora|33 \
-	opensuse/leap|15.2 \
-	oraclelinux|8 \
-	quay.io/centos/centos|stream \
-	ubuntu|18.04 \
-	ubuntu|20.04
+	alpine-3.13.4 \
+	amazonlinux-2 \
+	centos-7 \
+	centos-8 \
+	debian-10 \
+	fedora-33 \
+	opensuse/leap-15.2 \
+	oraclelinux-8 \
+	quay.io/centos/centos-stream \
+	ubuntu-18.04 \
+	ubuntu-20.04
 
 _NORM   := \033[0m
 _BLACK  := \033[31m
@@ -46,7 +46,7 @@ help usage:
 all: $(_TARGET_DEFAULT_DOCKER_IMAGES) ## Build all Zeek development images
 
 list-images: ## List all default Docker images
-	@for x in $(subst |,:,$(_TARGET_DEFAULT_DOCKER_IMAGES)); do printf "$(_CYAN)%s$(_NORM)\n" $$x; done
+	@for x in $(subst -,:,$(_TARGET_DEFAULT_DOCKER_IMAGES)); do printf "$(_CYAN)%s$(_NORM)\n" $$x; done
 
 zeek-dev:       ## Docker base image for Zeek development
 zeek-runtime:   ## Docker base image for Zeek runtime
@@ -63,7 +63,7 @@ zeek: zeek-build zeek-runtime
 	$(DOCKER_BUILD) --build-arg FROM_IMAGE_ARTIFACT=$(TAG_PREFIX)/$(firstword $^):$(TAG_VERSION) --build-arg FROM_IMAGE_BASE=$(TAG_PREFIX)/$(lastword $^):$(TAG_VERSION) --tag $(TAG_PREFIX)/$@:$(TAG_VERSION) --file $(DOCKERFILE).$@
 
 $(_TARGET_DEFAULT_DOCKER_IMAGES):
-	make zeek-dev FROM_IMAGE=$(subst |,:,$@)
+	make zeek-dev FROM_IMAGE=$(subst -,:,$@)
 
 clean: ## Prune Docker images
 	$(DOCKER) image prune --force
