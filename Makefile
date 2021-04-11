@@ -12,7 +12,7 @@ TAG_PREFIX  := $(REPO)/$(OS_NAME)/$(OS_VERSION)
 ifdef CI
 	DOCKER_BUILD := $(DOCKER) build .
 else
-	DOCKER_BUILD := $(DOCKER) build . --network=host
+	DOCKER_BUILD := $(DOCKER) build . --network=host --cpuset-cpus=0
 endif
 
 # Docker tag version separator `:` is conflicting with Makefile `:`.

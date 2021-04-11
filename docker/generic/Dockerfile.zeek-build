@@ -25,8 +25,7 @@ WORKDIR /scratch/zeek
 RUN ./configure \
         --prefix=${ZEEK_PREFIX}
 
-#RUN make -j
-RUN make
+RUN make -j$(nproc)
 
 RUN make install
 ENV PATH="${ZEEK_PREFIX}/bin:$PATH"
