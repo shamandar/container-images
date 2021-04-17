@@ -12,4 +12,4 @@ RUN zypper refresh \
     && zypper --non-interactive --quiet install \
         --auto-agree-with-licenses --no-recommends `cat Requirements.txt` \
     && zypper clean \
-    && rm -rf /var/cache/zypp/*
+    && rm -rf /var/cache/zypp/* /var/lib/zypp/* /var/lib/rpm/*

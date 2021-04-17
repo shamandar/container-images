@@ -34,6 +34,7 @@ RUN dnf --assumeyes install oraclelinux-release-el8 \
 
 RUN dnf --assumeyes update \
     && dnf --assumeyes install `cat Requirements.txt` \
-    && dnf clean all
+    && dnf clean all \
+    && rm -rf /var/cache/dnf/* /var/lib/dnf/* /var/lib/rpm/*
 
 RUN pip3 install junit2html

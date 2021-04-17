@@ -27,6 +27,7 @@ RUN dnf --assumeyes install dnf-plugins-core \
 
 RUN dnf --assumeyes update \
     && dnf --assumeyes install `cat Requirements.txt` \
-    && dnf clean all
+    && dnf clean all \
+    && rm -rf /var/cache/dnf/* /var/lib/dnf/* /var/lib/rpm/*
 
 RUN pip3 install junit2html
