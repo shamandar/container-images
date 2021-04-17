@@ -22,16 +22,15 @@ WORKDIR /scratch
 ARG REQUIREMENTS
 COPY ${REQUIREMENTS} Requirements.txt
 
-# Oracle Linux 8 Developer yum repository configuration
+# Oracle Linux 8 CodeReady Builder (x86_64) - Unsupported
+RUN dnf --assumeyes install oraclelinux-release-el8 \
+    && dnf config-manager --set-enabled ol8_codeready_builder
+
+# Oracle Linux 8 Development Packages (x86_64)
 #RUN dnf --assumeyes install oraclelinux-developer-release-el8
 
-# Oracle Linux 8 Extra Packages for Enterprise Linux (EPEL) yum repository
+# Oracle Linux 8 EPEL Packages for Development (x86_64)
 #RUN dnf --assumeyes install oracle-epel-release-el8
-
-# Development package `libpcap-devel` cannot be found in Oracle repositories.
-# Must install it from "CentOS Linux 8 - PowerTools" for now.
-COPY docker/oraclelinux/RPM-GPG-KEY-centosofficial /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-COPY docker/oraclelinux/CentOS-Linux-PowerTools.repo /etc/yum.repos.d/CentOS-Linux-PowerTools.repo
 
 RUN dnf --assumeyes update \
     && dnf --assumeyes install `cat Requirements.txt` \
