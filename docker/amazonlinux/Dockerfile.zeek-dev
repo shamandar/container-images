@@ -29,6 +29,6 @@ COPY ${REQUIREMENTS} Requirements.txt
 RUN yum --assumeyes update \
     && yum --assumeyes install `cat Requirements.txt` \
     && yum clean all \
-    && rm -rf /var/cache/yum/* /var/lib/yum/* /var/lib/rpm/*
+    && rm -rf /var/cache/yum/*
 
 RUN pip3 install junit2html
