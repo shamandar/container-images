@@ -46,7 +46,7 @@ help usage:
 all: $(_TARGET_DEFAULT_DOCKER_IMAGES) ## Build all Docker images
 
 list-images: ## List all default Docker images
-	@for x in $(subst -,:,$(_TARGET_DEFAULT_DOCKER_IMAGES)); do printf "$(_CYAN)%s$(_NORM)\n" $$x; done
+	@for x in $(subst -,:,$(_TARGET_DEFAULT_DOCKER_IMAGES)); do if test -t 1; then printf "$(_CYAN)%s$(_NORM)\n" $$x; else echo $$x; fi; done
 
 clean: ## Prune Docker images
 	$(DOCKER) image prune --force
