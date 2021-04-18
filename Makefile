@@ -41,29 +41,12 @@ _CYAN   := \033[36m
 _WHITE  := \033[37m
 
 help usage:
-	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##"}; {printf "$(_CYAN)%-20s$(_NORM) %s\n", $$1, $$2}'
+	@grep --no-filename --extended-regexp '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##"}; {printf "$(_CYAN)%-20s$(_NORM) %s\n", $$1, $$2}'
 
-all: $(_TARGET_DEFAULT_DOCKER_IMAGES) ## Build all Zeek development images
+all: $(_TARGET_DEFAULT_DOCKER_IMAGES) ## Build all Docker images
 
 list-images: ## List all default Docker images
 	@for x in $(subst -,:,$(_TARGET_DEFAULT_DOCKER_IMAGES)); do printf "$(_CYAN)%s$(_NORM)\n" $$x; done
-
-zeek-dev:       ## Docker base image for Zeek development
-zeek-runtime:   ## Docker base image for Zeek runtime
-zeek-build:     ## Intermediate Docker image for compiling Zeek
-zeek:           ## Docker App image for running Zeek
-
-zeek-dev zeek-runtime:
-	$(DOCKER_BUILD) --build-arg FROM_IMAGE_BASE=$(FROM_IMAGE) --build-arg REQUIREMENTS=$(REQUIREMENTS).$@ --tag $(TAG_PREFIX)/$@:$(TAG_VERSION) --file $(DOCKERFILE).$@
-
-zeek-build: zeek-dev
-	$(DOCKER_BUILD) --build-arg FROM_IMAGE_BASE=$(TAG_PREFIX)/$<:$(TAG_VERSION) --tag $(TAG_PREFIX)/$@:$(TAG_VERSION) --file $(DOCKERFILE).$@
-
-zeek: zeek-build zeek-runtime
-	$(DOCKER_BUILD) --build-arg FROM_IMAGE_ARTIFACT=$(TAG_PREFIX)/$(firstword $^):$(TAG_VERSION) --build-arg FROM_IMAGE_BASE=$(TAG_PREFIX)/$(lastword $^):$(TAG_VERSION) --tag $(TAG_PREFIX)/$@:$(TAG_VERSION) --file $(DOCKERFILE).$@
-
-$(_TARGET_DEFAULT_DOCKER_IMAGES):
-	make zeek-dev FROM_IMAGE=$(subst -,:,$@)
 
 clean: ## Prune Docker images
 	$(DOCKER) image prune --force
@@ -71,4 +54,10 @@ clean: ## Prune Docker images
 sysclean: ## Prune Docker system
 	$(DOCKER) system prune --force
 
-.PHONY: help usage all list-images zeek-dev zeek-runtime zeek-build zeek $(_TARGET_DEFAULT_DOCKER_IMAGES) clean sysclean
+-include zeek.mk
+
+$(_TARGET_DEFAULT_DOCKER_IMAGES):
+	make zeek-build FROM_IMAGE=$(subst -,:,$@)
+
+.PHONY: help usage all list-images clean sysclean
+.PHONY: $(_TARGET_DEFAULT_DOCKER_IMAGES)
