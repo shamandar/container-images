@@ -11,10 +11,10 @@ REQUIREMENTS:= docker/$(OS_NAME)/$(OS_VERSION)/Requirements
 TAG_PREFIX  := $(REPO)/$(OS_NAME)/$(OS_VERSION)
 
 ifdef CI
-	DOCKER_BUILD := $(DOCKER) build .
+	DOCKER_BUILD := $(DOCKER) build . $(DOCKER_BUILD_OPTS)
 	DOCKER_RUN   := $(DOCKER) run
 else
-	DOCKER_BUILD := $(DOCKER) build . --network=host --cpuset-cpus=0
+	DOCKER_BUILD := $(DOCKER) build . --network=host --cpuset-cpus=0 $(DOCKER_BUILD_OPTS)
 	DOCKER_RUN   := $(DOCKER) run --cpuset-cpus=0
 endif
 
