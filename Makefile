@@ -44,7 +44,7 @@ _CYAN   := \033[36m
 _WHITE  := \033[37m
 
 help usage:
-	@grep --no-filename --extended-regexp '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+	@grep -hE '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?##"}; {printf "$(_CYAN)%-20s$(_NORM) %s\n", $$1, $$2}'
 
 all: $(_TARGET_DEFAULT_DOCKER_IMAGES) ## Build all products on all Docker images
