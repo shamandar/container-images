@@ -1,0 +1,13 @@
+bison
+cmake
+flex
+gcc
+git
+libpcap-devel
+make
+openssl-devel
+python3
+python3-devel
+python3-pip
+swig
+zlib-devel

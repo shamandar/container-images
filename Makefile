@@ -30,6 +30,7 @@ _TARGET_DEFAULT_DOCKER_IMAGES := \
 	fedora-33 \
 	opensuse/leap-15.2 \
 	oraclelinux-8 \
+	photon-4.0 \
 	quay.io/centos/centos-stream \
 	ubuntu-18.04 \
 	ubuntu-20.04
