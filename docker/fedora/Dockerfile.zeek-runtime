@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # fedora-33 is like newer centos-8 (but without extra Powertools repo)
 #
 # docker run fedora:33 dnf --version

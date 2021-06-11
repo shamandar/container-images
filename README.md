@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: MIT -->
+
 # Dockémon Gotta Build 'Em All!
 
 

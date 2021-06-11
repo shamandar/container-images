@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # oraclelinux-8 is based on centos-8 (but without extra Powertools repo)
 #
 # docker run oraclelinux:8 dnf --version

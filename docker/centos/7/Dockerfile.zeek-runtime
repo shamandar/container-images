@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # docker run centos:7 yum --version
 #   3.4.3
 #     Installed: rpm-4.11.3-45.el7.x86_64 at 2020-11-13 01:54

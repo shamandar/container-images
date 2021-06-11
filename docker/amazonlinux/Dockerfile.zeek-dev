@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # amazonlinux-2 is based on centos-7 (but without extra EPEL repo)
 #
 # docker run amazonlinux:2 yum --version

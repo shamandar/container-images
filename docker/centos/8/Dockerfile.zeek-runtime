@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # docker run centos:8 dnf --version
 #   4.2.23
 #     Installed: dnf-0:4.2.23-4.el8.noarch at Fri Dec  4 17:37:29 2020

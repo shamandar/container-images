@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 zeek-dev:       ## Docker base image for Zeek development
 zeek-runtime:   ## Docker base image for Zeek runtime
 zeek-build:     ## Intermediate Docker image for compiling Zeek
