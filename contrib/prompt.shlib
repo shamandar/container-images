@@ -1,0 +1,38 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Shell prompt inspired by Photon and Kali Linux prompts. To install:
+#
+#   $ source contrib/prompt.shlib
+#
+# Known Issue:
+#   - Does not work with DaSH (Debian and Ubuntu default `/bin/sh`).
+#     Requires Bash-compatible or Ash (Alpine BusyBox `/bin/sh`).
+GIT_PROMPT_LOCATIONS="
+    /etc/bash_completion.d/git-prompt.sh
+    /etc/bash_completion.d/git-prompt
+    /usr/share/git-core/contrib/completion/git-prompt.sh
+"
+
+for x in $GIT_PROMPT_LOCATIONS; do
+    if [ -r $x ]; then
+        source $x
+        break
+    fi
+done
+
+RED="\033[0;31m"
+NORM="\033[0m"
+
+# OS PRETTY_NAME is useful information when working with different containers.
+os_pretty_name()
+{
+    source /etc/os-release; echo $PRETTY_NAME
+}
+
+if [ $(type -t __git_ps1) ]; then
+    # Function __git_ps1 is available
+    export PS1="$RED\$(os_pretty_name) 💀 \u@\h [$NORM \w $RED]\$(__git_ps1 \" ($NORM %s $RED)\")$NORM\n\\$ "
+else
+    # Fallback to `git` command
+    export PS1="$RED\$(os_pretty_name) 💀 \u@\h [$NORM \w $RED] ($NORM \$(git symbolic-ref --short HEAD 2>/dev/null) $RED)$NORM\n\\$ "
+fi
